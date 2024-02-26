@@ -1,10 +1,9 @@
 import cowsay
 import argparse
-import sys
-
 
 parser = argparse.ArgumentParser(prog="cow_say",
-                                 description="Works like python-cowsay, supports -l flag")
+                                 description="Works like python-cowsay, \
+                                 supports -l flag")
 
 parser.add_argument("message", nargs="?", default="", help="the message for a cow")
 parser.add_argument("-e", default=cowsay.Option.eyes, dest="eyes",
