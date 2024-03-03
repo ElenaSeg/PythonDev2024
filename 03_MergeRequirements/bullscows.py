@@ -5,7 +5,6 @@ import typing
 from random import choice
 import requests
 
-
 def ask(prompt: str, valid: typing.List[str]) -> str:
     while True:
         print(prompt)
@@ -43,9 +42,7 @@ def parse_args():
     parser = ArgumentParser()
     parser.add_argument('dictionary', help='Path/URL with list of words')
     parser.add_argument('length', nargs='?', type=int, default=5, help='Word length')
-
     return parser.parse_args()
-
 
 if __name__ == '__main__':
     args = parse_args()
@@ -55,9 +52,7 @@ if __name__ == '__main__':
     else:
         with requests.get(args.dictionary) as r:
             dictionary = [word.strip() for word in r.text.split()]
-
     if args.length:
-        dictionary = [word for word in dictionary if len(word) == args.length]
-    
+        dictionary = [word for word in dictionary if len(word) == args.length] 
     attempts = gameplay(ask, inform, dictionary)
     print(f'Game ends with {attempts} attempts')
