@@ -20,6 +20,8 @@ def inform(format_string: str, bulls: int, cows: int) -> None:
     print(format_string.format(bulls, cows))
 
 def bullscows(guess: str, secret: str) -> typing.Tuple[int, int]:
+	if len(guess) != len(secret):
+		raise ValueError("guess and secret strings must be the same length")
 	bulls = sum(guess == secret for guess, secret in zip(guess, secret))
 	common = Counter(guess) & Counter(secret)
 	cows = sum(common.values())
