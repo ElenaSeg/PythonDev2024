@@ -4,10 +4,17 @@ from collections import Counter
 import typing
 from random import choice
 import requests
+from io import StringIO
+import cowsay
 
 def ask(prompt: str, valid: typing.List[str]) -> str:
     while True:
-        print(prompt)
+		
+        if guess is not None:
+            tmp_prompt =  f'Слова {guess:^9s} нет в словаре.\n'
+            print(cowsay.cowsay(tmp_prompt, cow=cowsay.get_random_cow()))
+        else:
+            print(cowsay.cowsay(prompt, cow=cowsay.get_random_cow()))
         guess = input().strip()
         if guess not in valid:
             print('Такого слова нет в словаре')
@@ -16,7 +23,7 @@ def ask(prompt: str, valid: typing.List[str]) -> str:
             return guess
     
 def inform(format_string: str, bulls: int, cows: int) -> None:
-    print(format_string.format(bulls, cows))
+	print(cowsay.cowsay(format_string.format(bulls, cows), cow=cowsay.get_random_cow()))
 
 def bullscows(guess: str, secret: str) -> typing.Tuple[int, int]:
 	if len(guess) != len(secret):
