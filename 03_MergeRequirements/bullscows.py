@@ -7,23 +7,33 @@ import requests
 from io import StringIO
 import cowsay
 
+
+COW = cowsay.read_dot_cow(StringIO("""
+$the_cow = <<EOC;
+           $thoughts
+            $thoughts
+   /\_/\    (\ __/)  
+  (˶•o•˶)   ( •ω• )    
+  ଘ(ა🍩)     (ა🍪૮)｡                  
+EOC
+"""))
+
 def ask(prompt: str, valid: typing.List[str]) -> str:
+    guess = None
     while True:
-		
         if guess is not None:
             tmp_prompt =  f'Слова {guess:^9s} нет в словаре.\n'
-            print(cowsay.cowsay(tmp_prompt, cow=cowsay.get_random_cow()))
+            print(cowsay.cowsay(tmp_prompt, cowfile = COW))
         else:
-            print(cowsay.cowsay(prompt, cow=cowsay.get_random_cow()))
+             print(cowsay.cowsay(prompt, cowfile = COW))
         guess = input().strip()
         if guess not in valid:
-            print('Такого слова нет в словаре')
             continue
         else:
             return guess
     
 def inform(format_string: str, bulls: int, cows: int) -> None:
-	print(cowsay.cowsay(format_string.format(bulls, cows), cow=cowsay.get_random_cow()))
+    print(format_string.format(bulls, cows))
 
 def bullscows(guess: str, secret: str) -> typing.Tuple[int, int]:
 	if len(guess) != len(secret):
@@ -31,7 +41,7 @@ def bullscows(guess: str, secret: str) -> typing.Tuple[int, int]:
 	bulls = sum(guess == secret for guess, secret in zip(guess, secret))
 	common = Counter(guess) & Counter(secret)
 	cows = sum(common.values())
-return bulls, cows
+	return bulls, cows
 
 def gameplay(ask: typing.Callable, inform: typing.Callable, words: typing.List[int]) -> int:
     secret = choice(words)
@@ -63,3 +73,4 @@ if __name__ == '__main__':
         dictionary = [word for word in dictionary if len(word) == args.length] 
     attempts = gameplay(ask, inform, dictionary)
     print(f'Game ends with {attempts} attempts')
+	
